@@ -1,0 +1,12 @@
+{
+    "name": "sql_mock_data_gen",
+    "version": "1",
+    "private": true,
+    "dependencies": {
+        "csv-writer": "^1.6.0",
+        "papaparse": "^5.3.2"
+    },
+    "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
+  }
+}
