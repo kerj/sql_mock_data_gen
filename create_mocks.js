@@ -49,9 +49,6 @@ const create_mocks = (obj, length = 1, foreignKeyValues = []) => {
           break;
         case 'FK1':
           // if more than one, use a random value
-
-          console.log(foreignKeyValues['fk1'][Math.floor(Math.random() * foreignKeyValues['fk1'].length)])
-
           mockObj[key] = foreignKeyValues['fk1'][Math.floor(Math.random() * foreignKeyValues['fk1'].length)]
           break;
         case 'FK2':
