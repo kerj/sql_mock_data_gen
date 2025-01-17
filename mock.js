@@ -5,7 +5,7 @@ const {
 
 /**
  * From DB diagram.io we started with:
- Table rides {
+ Table maps {
   id TEXT [primary key]
   map TEXT [not null]
   start_point TEXT [not null]
@@ -24,7 +24,7 @@ const {
 
 Table pins {
   id TEXT [primary key]
-  ride_id TEXT [ref: > rides.id, not null]
+  map_id TEXT [ref: > maps.id, not null]
   lat_long TEXT [not null]
   content TEXT
   user_id TEXT [not null]
@@ -35,7 +35,7 @@ Table pins {
  */
 
 /**
-CREATE TABLE "rides" (
+CREATE TABLE "maps" (
   "id" TEXT PRIMARY KEY,
   "map" TEXT NOT NULL,
   "start_point" TEXT NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE "rides" (
   "updated_at" TIMESTAMP NOT NULL DEFAULT (now())
 );
  */
-const rides = {
+const maps = {
   id: "id", // [PK]
   map: "number",
   start_point: "number",
@@ -68,16 +68,16 @@ const rides = {
   created_at: "random_date",
   updated_at: "random_date",
 };
-// creates 10 mock records to populate the "rides" table, values correspond to the switch case in create_mocks
+// creates 10 mock records to populate the "maps" table, values correspond to the switch case in create_mocks
 // mocks are build from the faker library so you can add whatever they support by including more cases
-const ridesTableValues = outputGeneratedCsv(rides, "rides", 10);
+const mapsTableValues = outputGeneratedCsv(maps, "maps", 10);
 // store the id reference so we can create the FK relationship on other tables
-const rideIds = getValuesFromTableColumn(ridesTableValues, 0);
+const mapIds = getValuesFromTableColumn(mapsTableValues, 0);
 
 /**
 CREATE TABLE "pins" (
   "id" TEXT PRIMARY KEY,
-  "ride_id" TEXT NOT NULL,
+  "map_id" TEXT NOT NULL,
   "lat_long" TEXT NOT NULL,
   "content" TEXT,
   "user_id" TEXT NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE "pins" (
 const pins = {
   id: "id",
   // denoting that we will be referencing a set of values we supply to create the relationship
-  ride_id: "FK1",
+  map_id: "FK1",
   lat_long: "bird",
   content: "email",
   // this could be a FK is we had a "users" table, we would show that as "FK2"
@@ -98,6 +98,6 @@ const pins = {
   updated_at: "random_date",
 };
 
-outputGeneratedCsv(pins, "pins", 100, { fk1: rideIds });
+outputGeneratedCsv(pins, "pins", 100, { fk1: mapIds });
 
-// node mock.js will create both mock value csv with the pins csv using a FK reference to the ride.id column
+// node mock.js will create both mock value csv with the pins csv using a FK reference to the map.id column
