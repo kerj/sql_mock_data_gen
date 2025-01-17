@@ -44,7 +44,7 @@ const create_mocks = (obj, length = 1, foreignKeyValues = []) => {
         case "number":
           mockObj[key] = parseInt(faker.random.numeric());
           break;
-        case "bird":
+        case "bird": // fun but it can add an ' to some of the values that will break some insert statements 
           mockObj[key] = faker.animal.bird();
           break;
         case "FK1":
@@ -112,10 +112,10 @@ const outputGeneratedCsv = (obj, outputName = "output", rows = 1, fks = []) => {
 // run the outputGeneratedCsv, open the file in Gsheets,
 // copy the values from the column that should be used as the FK
 // run the outputGeneratedCSV again but include the values copied
-// youre new sheet will contain a reference to those values in the FK defined column in the object you pass in.
+// your new sheet will contain a reference to those values in the FK defined column in the object you pass in.
 
-const getValuesFromTableColumn = (tableName, columnNumber) => {
-  return tableName.reduce((acc, row, i) => {
+const getValuesFromTableColumn = (table, columnNumber) => {
+  return table.reduce((acc, row, i) => {
     return i === 0 || !row[columnNumber] ? acc : [...acc, row[columnNumber]];
   }, []);
 };

@@ -4,21 +4,52 @@ const {
 } = require("./create_mocks");
 
 /**
+ * From DB diagram.io we started with:
+ Table rides {
+  id TEXT [primary key]
+  map TEXT [not null]
+  start_point TEXT [not null]
+  end_point TEXT [not null]
+  start_date TIMESTAMP [not null]
+  end_date TIMESTAMP [not null]
+  distance DECIMAL [not null]
+  elevation_gain INTEGER [not null]
+  name TEXT [not null]
+  ave_speed DECIMAL [not null]
+  ave_watts DECIMAL [not null]
+  pr_count INTEGER [not null]
+  created_at TIMESTAMP [not null, default: `now()`]
+  updated_at TIMESTAMP [not null, default: `now()`]
+}
+
+Table pins {
+  id TEXT [primary key]
+  ride_id TEXT [ref: > rides.id, not null]
+  lat_long TEXT [not null]
+  content TEXT
+  user_id TEXT [not null]
+  created_at TIMESTAMP [not null, default: `now()`]
+  updated_at TIMESTAMP [not null, default: `now()`]
+}
+
+ */
+
+/**
 CREATE TABLE "rides" (
-  "id" bigserial PRIMARY KEY,
+  "id" TEXT PRIMARY KEY,
   "map" TEXT NOT NULL,
   "start_point" TEXT NOT NULL,
   "end_point" TEXT NOT NULL,
-  "start_date" DATETIME NOT NULL,
-  "end_date" DATETIME NOT NULL,
+  "start_date" TIMESTAMP NOT NULL,
+  "end_date" TIMESTAMP NOT NULL,
   "distance" DECIMAL NOT NULL,
   "elevation_gain" INTEGER NOT NULL,
   "name" TEXT NOT NULL,
   "ave_speed" DECIMAL NOT NULL,
   "ave_watts" DECIMAL NOT NULL,
   "pr_count" INTEGER NOT NULL,
-  "created_at" DATETIME NOT NULL DEFAULT (now()),
-  "updated_at" DATETIME NOT NULL DEFAULT (now())
+  "created_at" TIMESTAMP NOT NULL DEFAULT (now()),
+  "updated_at" TIMESTAMP NOT NULL DEFAULT (now())
 );
  */
 const rides = {
@@ -44,14 +75,14 @@ const ridesTableValues = outputGeneratedCsv(rides, "rides", 10);
 const rideIds = getValuesFromTableColumn(ridesTableValues, 0);
 
 /**
- CREATE TABLE "pins" (
-  "id" bigserial PRIMARY KEY,
-  "ride_id" bigint NOT NULL,
+CREATE TABLE "pins" (
+  "id" TEXT PRIMARY KEY,
+  "ride_id" TEXT NOT NULL,
   "lat_long" TEXT NOT NULL,
   "content" TEXT,
-  "user_id" INTEGER NOT NULL,
-  "created_at" DATETIME NOT NULL DEFAULT (now()),
-  "updated_at" DATETIME NOT NULL DEFAULT (now())
+  "user_id" TEXT NOT NULL,
+  "created_at" TIMESTAMP NOT NULL DEFAULT (now()),
+  "updated_at" TIMESTAMP NOT NULL DEFAULT (now())
 );
  */
 
